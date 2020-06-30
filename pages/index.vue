@@ -3,17 +3,17 @@
     <div>
       <Logo />
       <h1 class="title">
-        nuxt-content-article
+        Nuxt Content Article
       </h1>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
+        <NuxtLink
+          to="/blog"
           target="_blank"
           rel="noopener noreferrer"
           class="button--green"
         >
-          Documentation
-        </a>
+          Blog
+        </NuxtLink>
         <a
           href="https://github.com/nuxt/nuxt.js"
           target="_blank"

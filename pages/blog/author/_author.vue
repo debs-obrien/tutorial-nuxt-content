@@ -33,7 +33,6 @@ export default {
           $regex: [params.author, 'i']
         }
       })
-      // .only(['title', 'slug', 'author', 'bio', 'description', 'alt', 'img'])
       .without('body')
       .sortBy('createdAt', 'asc')
       .fetch()

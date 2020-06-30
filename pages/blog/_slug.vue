@@ -26,6 +26,7 @@
       </ul>
     </nav>
     <nuxt-content :document="article" />
+
     <author :author="article.author" />
 
     <PrevNext :prev="prev" :next="next" class="lg:px-8 mt-4" />
