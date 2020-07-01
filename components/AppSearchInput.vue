@@ -4,7 +4,8 @@
       v-model="searchQuery"
       type="search"
       autocomplete="off"
-      class="block w-full pl-10 pr-3 py-2 truncate leading-5 placeholder-gray-500 border border-transparent text-gray-700 dark:text-white dark-focus:text-white focus:border-gray-300 dark-focus:border-gray-700 rounded-md focus:outline-none focus:bg-white bg-gray-200"
+      placeholder="Search Articles"
+      class="block w-full pl-10 pr-3 py-2 truncate leading-5 placeholder-gray-500 border border-transparent text-gray-700 focus:border-gray-300 rounded-md focus:outline-none focus:bg-white bg-white"
     />
     <ul
       v-if="articles.length"
@@ -15,8 +16,8 @@
           :to="{ name: 'blog-slug', params: { slug: article.slug } }"
           class="flex px-4 py-2 items-center leading-5 transition ease-in-out duration-150 text-green-500 hover:text-black"
         >
-          {{ article.title }}</NuxtLink
-        >
+          {{ article.title }}
+        </NuxtLink>
       </li>
     </ul>
   </div>

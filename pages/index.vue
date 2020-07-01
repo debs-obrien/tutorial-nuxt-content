@@ -1,70 +1,71 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        Nuxt Content Article
-      </h1>
-      <div class="links">
+  <div class="m-8">
+    <TheHeader />
+
+    <h1 class="font-bold text-4xl">Blog Posts</h1>
+    <ul>
+      <li
+        v-for="article in articles"
+        :key="article.slug"
+        class="xs:w-full md:w-1/2 px-2 xs:mb-6 md:mb-12 article-card"
+      >
         <NuxtLink
-          to="/blog"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
+          :to="{ name: 'blog-slug', params: { slug: article.slug } }"
+          class="flex transition-shadow duration-150 ease-in-out shadow-sm hover:shadow-md xxlmax:flex-col"
         >
-          Blog
+          <img
+            v-if="article.img"
+            class="h-48 xxlmin:w-1/2 xxlmax:w-full object-cover"
+            :src="article.img"
+          />
+
+          <div
+            class="p-6 flex flex-col justify-between xxlmin:w-1/2 xxlmax:w-full"
+          >
+            <h2 class="font-bold">{{ article.title }}</h2>
+            <p>by {{ article.author.name }}</p>
+            <p class="font-bold text-gray-600 text-sm">
+              {{ article.description }}
+            </p>
+            <p class="font-bold text-gray-600 text-sm">
+              Post last updated: {{ formatDate(article.updatedAt) }}
+            </p>
+          </div>
         </NuxtLink>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData({ $content, params }) {
+    const articles = await $content('articles', params.slug)
+      .only(['title', 'slug', 'author', 'img', 'u', 'description'])
+      .sortBy('slug', 'asc')
+      .fetch()
+    return {
+      articles
+    }
+  },
+  methods: {
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('en', options)
+    }
+  }
+}
 </script>
 
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
+<style class="postcss">
+.article-card {
+  border-radius: 8px;
 }
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.article-card a {
+  background-color: #fff;
+  border-radius: 8px;
 }
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.article-card img div {
+  border-radius: 8px 0 0 8px;
 }
 </style>

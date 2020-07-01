@@ -1,35 +1,63 @@
 <template>
-  <article>
-    <h1 class="font-bold text-4xl">{{ article.title }}</h1>
-    <p>{{ article.description }}</p>
-    <img :src="require(`~/assets/img/${article.img}`)" :alt="article.alt" />
-    <p class="pb-4">Post last updated: {{ formatDate(article.updatedAt) }}</p>
-    <nav class="pb-6">
-      <ul>
-        <li
-          v-for="link of article.toc"
-          :key="link.id"
-          :class="{
-            'font-semibold': link.depth === 2
-          }"
-        >
-          <nuxtLink
-            :to="`#${link.id}`"
-            class="hover:underline"
+  <article
+    class="flex lg:h-screen w-screen lg:overflow-hidden xs:flex-col lg:flex-row"
+  >
+    <div class="relative lg:w-1/2 xs:w-full xs:h-84 lg:h-full post-left">
+      <img
+        :src="article.img"
+        :alt="article.alt"
+        class="absolute h-full w-full object-cover"
+      />
+      <div class="overlay"></div>
+      <div class="absolute top-32 left-32 text-white">
+        <NuxtLink to="/"><Logo /></NuxtLink>
+        <div class="mt-16 -mb-3 flex uppercase text-sm">
+          <p class="mr-3">
+            {{ formatDate(article.updatedAt) }}
+          </p>
+          <span class="mr-3">•</span>
+          <p>{{ article.author.name }}</p>
+        </div>
+        <h1 class="text-6xl font-bold">{{ article.title }}</h1>
+      </div>
+      <div class="flex absolute top-3rem right-3rem">
+        <NuxtLink to="/" class="mr-8 self-center">All articles</NuxtLink>
+        <AppSearchInput />
+      </div>
+    </div>
+    <div
+      class="relative xs:py-8 xs:px-8 lg:py-32 lg:px-16 lg:w-1/2 xs:w-full h-full overflow-y-scroll markdown-body post-right custom-scroll"
+    >
+      <h1 class="font-bold text-4xl">{{ article.title }}</h1>
+      <p>{{ article.description }}</p>
+      <p class="pb-4">Post last updated: {{ formatDate(article.updatedAt) }}</p>
+      <nav class="pb-6">
+        <ul>
+          <li
+            v-for="link of article.toc"
+            :key="link.id"
             :class="{
-              'py-2': link.depth === 2,
-              'ml-2 pb-2': link.depth === 3
+              'font-semibold': link.depth === 2
             }"
-            >{{ link.text }}</nuxtLink
           >
-        </li>
-      </ul>
-    </nav>
-    <nuxt-content :document="article" />
+            <nuxtLink
+              :to="`#${link.id}`"
+              class="hover:underline"
+              :class="{
+                'py-2': link.depth === 2,
+                'ml-2 pb-2': link.depth === 3
+              }"
+              >{{ link.text }}</nuxtLink
+            >
+          </li>
+        </ul>
+      </nav>
+      <nuxt-content :document="article" />
 
-    <author :author="article.author" />
+      <author :author="article.author" />
 
-    <PrevNext :prev="prev" :next="next" class="lg:px-8 mt-4" />
+      <PrevNext :prev="prev" :next="next" class="mt-8" />
+    </div>
   </article>
 </template>
 <script>
