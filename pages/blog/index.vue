@@ -1,5 +1,7 @@
 <template>
   <div>
+    <AppSearchInput />
+
     <h1 class="font-bold text-4xl">Blog Posts</h1>
     <ul>
       <li v-for="article in articles" :key="article.slug">
