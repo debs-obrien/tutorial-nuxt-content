@@ -37,8 +37,7 @@ export default {
         return
       }
       this.articles = await this.$content('articles')
-        .sortBy('position', 'asc')
-        .limit(12)
+        .limit(6)
         .search(searchQuery)
         .fetch()
     }

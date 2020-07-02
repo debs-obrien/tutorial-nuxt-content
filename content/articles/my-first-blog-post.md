@@ -23,12 +23,12 @@ This is some more info
   </template>
 </info-box>
 
-```js[server.js]
+```js[nuxt.config.js]
 export default {
   nuxt: "is the best"
 }
 ```
-```html
+```html[my-first-blog-post.md]
 <p>code styling is easy</p>
 ```
 

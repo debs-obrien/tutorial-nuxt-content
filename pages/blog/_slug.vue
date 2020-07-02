@@ -21,7 +21,12 @@
         <h1 class="text-6xl font-bold">{{ article.title }}</h1>
       </div>
       <div class="flex absolute top-3rem right-3rem">
-        <NuxtLink to="/" class="mr-8 self-center">All articles</NuxtLink>
+        <NuxtLink
+          to="/"
+          class="mr-8 self-center text-white font-bold hover:underline"
+        >
+          All articles
+        </NuxtLink>
         <AppSearchInput />
       </div>
     </div>

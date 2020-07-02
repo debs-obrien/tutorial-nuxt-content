@@ -5,7 +5,7 @@
     <h1 class="font-bold text-4xl">Blog Posts</h1>
     <ul>
       <li
-        v-for="article in articles"
+        v-for="article of articles"
         :key="article.slug"
         class="xs:w-full md:w-1/2 px-2 xs:mb-6 md:mb-12 article-card"
       >
@@ -27,9 +27,6 @@
             <p class="font-bold text-gray-600 text-sm">
               {{ article.description }}
             </p>
-            <p class="font-bold text-gray-600 text-sm">
-              Post last updated: {{ formatDate(article.updatedAt) }}
-            </p>
           </div>
         </NuxtLink>
       </li>
@@ -41,17 +38,11 @@
 export default {
   async asyncData({ $content, params }) {
     const articles = await $content('articles', params.slug)
-      .only(['title', 'slug', 'author', 'img', 'u', 'description'])
-      .sortBy('slug', 'asc')
+      .only(['title', 'description', 'img', 'slug', 'author'])
+      .sortBy('createdAt', 'asc')
       .fetch()
     return {
       articles
-    }
-  },
-  methods: {
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('en', options)
     }
   }
 }
